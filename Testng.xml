@@ -5,4 +5,7 @@
             <class name="tests.LoginPageWithTestng"/>
         </classes>
     </test>
+    <listeners>
+        <listener class-name="listeners.TestListeners"/>
+    </listeners>
 </suite>

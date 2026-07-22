@@ -9,7 +9,7 @@ public class ConfigReader {
     public ConfigReader() {
         prop = new Properties();
         try {
-            FileInputStream file = new FileInputStream("src/main/java/resources/config.properties");//open the file
+            FileInputStream file = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/config.properties");//open the file
             prop.load(file);//// read the file
         }
         catch (IOException e) { //if file not exits catch something and print

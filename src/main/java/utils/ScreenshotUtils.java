@@ -5,6 +5,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 public class ScreenshotUtils {
     WebDriver driver;
@@ -12,12 +14,15 @@ public class ScreenshotUtils {
         this.driver= driver;
     }
 
-    public void capturescreenShot(String filename) throws Exception{
-        TakesScreenshot ts =(TakesScreenshot) driver;
-        File sourcefile = ts.getScreenshotAs(OutputType.FILE);
-        File targetfile = new File(System.getProperty("user.dir")+"\\screenshots\\"+filename+".png");
-
-        sourcefile.renameTo(targetfile);
+    public static String capturescreenShot(WebDriver driver, String testname){
+        String path= System.getProperty("user.dir")+"/screenshots/"+testname+".png";
+        File srcfile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        try{
+            Files.copy(srcfile.toPath(),new File(path).toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return path;
     }
 
 }

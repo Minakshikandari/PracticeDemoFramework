@@ -1,5 +1,6 @@
 package tests;
 
+import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -13,39 +14,26 @@ import utils.ScreenshotUtils;
 
 import java.io.IOException;
 
-public class LoginPageWithTestng  {
-    WebDriver driver;
+public class LoginPageWithTestng extends BaseTest {
     LoginPage loginPage;
-    ScreenshotUtils screenshot;
-
     ConfigReader config = new ConfigReader();
-
-
-
-   /*By username = By.xpath("//input[@name='username']");
+    /*By username = By.xpath("//input[@name='username']");
    By password = By.xpath("//input[@name='password']");
    By Login = By.xpath("//button[@type='submit']");*/
 
     /*public LoginwithTestng() throws IOException {
     }*/
-
-    @BeforeMethod
-    public void openApp(){
-        driver =new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get(config.getUrl());
-        loginPage= new LoginPage(driver);
-        screenshot= new ScreenshotUtils(driver);
-    }
-
     @Test(priority = 1)
     public void SignIn(){
+        loginPage = new LoginPage(driver);
         loginPage.enterEmail(config.getEmail());
         loginPage.enterPassword(config.getPassword());
         loginPage.clickSignIn();
+
     }
     @Test(priority = 2)
     public void unsuccessfullSignIn() {
+        loginPage = new LoginPage(driver);
         loginPage.enterEmail("abc@gmail.com");
         loginPage.enterPassword("Abcdef");
         loginPage.clickSignIn();
@@ -54,10 +42,6 @@ public class LoginPageWithTestng  {
 
     }
 
-    @AfterMethod
-    public void closeApp() throws Exception {
-        screenshot.capturescreenShot("InvalidLogin");
-        driver.quit();
-    }
+
 }
 
